@@ -1,0 +1,190 @@
+{% stylesheet %}
+  :root {
+    --gift-guide-primary: {{ section.settings.primary_color }};
+    --gift-guide-text: {{ section.settings.text_color }};
+    --gift-guide-spacing-base: 16px;
+    --gift-guide-spacing-lg: 32px;
+    --gift-guide-spacing-xl: 48px;
+  }
+
+  .gift-guide-banner {
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    padding: var(--gift-guide-spacing-xl) var(--gift-guide-spacing-base);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 500px;
+  }
+
+  .gift-guide-banner__logo {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gift-guide-primary);
+    margin-bottom: var(--gift-guide-spacing-base);
+    opacity: 0.85;
+  }
+
+  .gift-guide-banner__headline {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--gift-guide-text);
+    margin-bottom: var(--gift-guide-spacing-base);
+    max-width: 600px;
+  }
+
+  .gift-guide-banner__subtext {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: var(--gift-guide-spacing-lg);
+    max-width: 500px;
+  }
+
+  .gift-guide-banner__cta-btn {
+    display: inline-block;
+    padding: 14px 48px;
+    background-color: var(--gift-guide-primary);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid var(--gift-guide-primary);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: var(--gift-guide-spacing-lg);
+  }
+
+  .gift-guide-banner__cta-btn:hover {
+    background-color: transparent;
+    color: var(--gift-guide-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .gift-guide-banner__tagline {
+    font-size: 14px;
+    color: #999;
+    font-style: italic;
+    margin-top: var(--gift-guide-spacing-base);
+  }
+
+  @media (max-width: 768px) {
+    .gift-guide-banner {
+      min-height: 400px;
+      padding: var(--gift-guide-spacing-lg) var(--gift-guide-spacing-base);
+    }
+
+    .gift-guide-banner__headline {
+      font-size: 32px;
+    }
+
+    .gift-guide-banner__subtext {
+      font-size: 16px;
+    }
+
+    .gift-guide-banner__cta-btn {
+      padding: 12px 40px;
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gift-guide-banner {
+      min-height: 350px;
+      padding: var(--gift-guide-spacing-lg) var(--gift-guide-spacing-base);
+    }
+
+    .gift-guide-banner__headline {
+      font-size: 24px;
+    }
+
+    .gift-guide-banner__subtext {
+      font-size: 14px;
+    }
+
+    .gift-guide-banner__logo {
+      font-size: 12px;
+    }
+  }
+{% endstylesheet %}
+
+<div class="gift-guide-banner">
+  <div class="gift-guide-banner__logo">{{ section.settings.logo_text }}</div>
+  
+  <h1 class="gift-guide-banner__headline">{{ section.settings.headline }}</h1>
+  
+  <p class="gift-guide-banner__subtext">{{ section.settings.subtext }}</p>
+  
+  <a href="{{ section.settings.cta_link }}" class="gift-guide-banner__cta-btn">
+    {{ section.settings.cta_text }}
+  </a>
+  
+  <div class="gift-guide-banner__tagline">{{ section.settings.tagline_text }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Gift Guide Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "HOLIDAY 2024"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Curated Gifts For Everyone"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subheading",
+      "default": "Discover our hand-picked collection of premium gifts"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "text",
+      "id": "tagline_text",
+      "label": "Bottom Tagline",
+      "default": "Carefully selected with love"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1a1a1a"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Guide Banner"
+    }
+  ]
+}
+{% endschema %}

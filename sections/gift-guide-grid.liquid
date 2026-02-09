@@ -1,0 +1,652 @@
+{% stylesheet %}
+  :root {
+    --grid-gap: 24px;
+    --grid-cols-desktop: 3;
+    --grid-cols-tablet: 2;
+    --grid-cols-mobile: 1;
+  }
+
+  .gift-guide-grid {
+    padding: 48px 16px;
+  }
+
+  .gift-guide-grid__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .gift-guide-grid__heading {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 48px;
+    text-align: center;
+    color: #1a1a1a;
+  }
+
+  .gift-guide-grid__tiles {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols-desktop), 1fr);
+    gap: var(--grid-gap);
+  }
+
+  .gift-guide-tile {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gift-guide-tile:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  }
+
+  .gift-guide-tile__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+
+  .gift-guide-tile__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .gift-guide-tile:hover .gift-guide-tile__image {
+    transform: scale(1.05);
+  }
+
+  .gift-guide-tile__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+
+  .gift-guide-tile:hover .gift-guide-tile__overlay {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .gift-guide-tile__view-btn {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    background: white;
+    color: #1a1a1a;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .gift-guide-tile:hover .gift-guide-tile__view-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Modal Popup */
+  .gift-guide-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .gift-guide-modal.active {
+    display: flex;
+  }
+
+  .gift-guide-modal__content {
+    background: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .gift-guide-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gift-guide-modal__close:hover {
+    color: #1a1a1a;
+  }
+
+  .gift-guide-modal__body {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .gift-guide-modal__image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background: #f0f0f0;
+    object-fit: cover;
+  }
+
+  .gift-guide-modal__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gift-guide-modal__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+  }
+
+  .gift-guide-modal__price {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 16px;
+  }
+
+  .gift-guide-modal__description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 24px;
+  }
+
+  .gift-guide-modal__variants {
+    margin-bottom: 24px;
+  }
+
+  .gift-guide-modal__variant-group {
+    margin-bottom: 20px;
+  }
+
+  .gift-guide-modal__variant-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .gift-guide-modal__variant-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .gift-guide-modal__variant-option {
+    padding: 10px 16px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .gift-guide-modal__variant-option:hover {
+    border-color: #1a1a1a;
+  }
+
+  .gift-guide-modal__variant-option.active {
+    background: #1a1a1a;
+    color: white;
+    border-color: #1a1a1a;
+  }
+
+  .gift-guide-modal__add-to-cart {
+    width: 100%;
+    padding: 14px;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+  }
+
+  .gift-guide-modal__add-to-cart:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .gift-guide-modal__add-to-cart:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .gift-guide-modal__error {
+    color: #d32f2f;
+    font-size: 12px;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .gift-guide-modal__error.show {
+    display: block;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .gift-guide-grid__tiles {
+      grid-template-columns: repeat(var(--grid-cols-tablet), 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .gift-guide-grid {
+      padding: 32px 16px;
+    }
+
+    .gift-guide-grid__heading {
+      font-size: 24px;
+      margin-bottom: 32px;
+    }
+
+    .gift-guide-grid__tiles {
+      grid-template-columns: repeat(var(--grid-cols-tablet), 1fr);
+      gap: 16px;
+    }
+
+    .gift-guide-modal__body {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gift-guide-grid {
+      padding: 24px 16px;
+    }
+
+    .gift-guide-grid__heading {
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+
+    .gift-guide-grid__tiles {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .gift-guide-modal__content {
+      max-width: 100%;
+      border-radius: 8px 8px 0 0;
+      max-height: 80vh;
+    }
+
+    .gift-guide-modal__body {
+      padding: 16px;
+    }
+
+    .gift-guide-modal__title {
+      font-size: 20px;
+    }
+
+    .gift-guide-modal__price {
+      font-size: 18px;
+    }
+  }
+{% endstylesheet %}
+
+<div class="gift-guide-grid">
+  <div class="gift-guide-grid__container">
+    <h2 class="gift-guide-grid__heading">{{ section.settings.grid_heading }}</h2>
+    
+    <div class="gift-guide-grid__tiles">
+      {% for block in section.blocks %}
+        {% if block.settings.product %}
+          <div class="gift-guide-tile" data-product-id="{{ block.settings.product.id }}">
+            <div class="gift-guide-tile__image-wrapper">
+              {% if block.settings.product.featured_image %}
+                <img 
+                  src="{{ block.settings.product.featured_image | image_url: width: 500 }}" 
+                  alt="{{ block.settings.product.title }}"
+                  class="gift-guide-tile__image"
+                >
+              {% else %}
+                <div class="gift-guide-tile__image" style="background: #f0f0f0;"></div>
+              {% endif %}
+              <div class="gift-guide-tile__overlay">
+                <button class="gift-guide-tile__view-btn" data-action="open-modal">View Details</button>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Modal Popup -->
+<div class="gift-guide-modal" id="giftGuideModal">
+  <div class="gift-guide-modal__content">
+    <button class="gift-guide-modal__close" aria-label="Close">&times;</button>
+    
+    <div class="gift-guide-modal__body">
+      <img id="modalProductImage" class="gift-guide-modal__image" src="" alt="">
+      
+      <div class="gift-guide-modal__info">
+        <h3 class="gift-guide-modal__title" id="modalProductTitle"></h3>
+        <p class="gift-guide-modal__price" id="modalProductPrice"></p>
+        <p class="gift-guide-modal__description" id="modalProductDescription"></p>
+        
+        <div class="gift-guide-modal__variants" id="modalVariants"></div>
+        
+        <div class="gift-guide-modal__error" id="modalError"></div>
+        
+        <button 
+          class="gift-guide-modal__add-to-cart" 
+          id="addToCartBtn"
+          data-action="add-to-cart"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% javascript %}
+  class GiftGuideGrid {
+    constructor(section) {
+      this.section = section;
+      this.modal = document.getElementById('giftGuideModal');
+      this.modalClose = this.modal.querySelector('.gift-guide-modal__close');
+      this.addToCartBtn = document.getElementById('addToCartBtn');
+      this.currentProduct = null;
+      this.selectedVariants = {};
+      
+      this.init();
+    }
+
+    init() {
+      // Attach event listeners to tiles
+      this.section.querySelectorAll('.gift-guide-tile').forEach(tile => {
+        const btn = tile.querySelector('[data-action="open-modal"]');
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.openModal(tile.dataset.productId);
+        });
+      });
+
+      // Modal close buttons
+      this.modalClose.addEventListener('click', () => this.closeModal());
+      this.modal.addEventListener('click', (e) => {
+        if (e.target === this.modal) this.closeModal();
+      });
+
+      // Add to cart
+      this.addToCartBtn.addEventListener('click', () => this.handleAddToCart());
+    }
+
+    async openModal(productId) {
+      try {
+        // Fetch product data from Shopify JSON
+        const response = await fetch(`/products/${productId}.js`);
+        if (!response.ok) throw new Error('Product not found');
+        
+        const product = await response.json();
+        this.currentProduct = product;
+        this.selectedVariants = {};
+        this.populateModal(product);
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } catch (error) {
+        console.error('Error loading product:', error);
+        this.showError('Unable to load product details');
+      }
+    }
+
+    populateModal(product) {
+      // Product image
+      document.getElementById('modalProductImage').src = product.featured_image;
+      document.getElementById('modalProductImage').alt = product.title;
+
+      // Product title
+      document.getElementById('modalProductTitle').textContent = product.title;
+
+      // Product price
+      const price = (product.price / 100).toFixed(2);
+      document.getElementById('modalProductPrice').textContent = `$${price}`;
+
+      // Product description
+      document.getElementById('modalProductDescription').textContent = 
+        product.description || 'No description available';
+
+      // Variants
+      this.renderVariants(product);
+    }
+
+    renderVariants(product) {
+      const variantsContainer = document.getElementById('modalVariants');
+      variantsContainer.innerHTML = '';
+
+      // Group variants by option
+      const options = {};
+      product.variants.forEach(variant => {
+        variant.options.forEach((option, index) => {
+          const optionName = product.options[index];
+          if (!options[optionName]) options[optionName] = new Set();
+          options[optionName].add(option);
+        });
+      });
+
+      // Create variant selectors
+      Object.entries(options).forEach(([optionName, optionValues]) => {
+        const group = document.createElement('div');
+        group.className = 'gift-guide-modal__variant-group';
+
+        const label = document.createElement('label');
+        label.className = 'gift-guide-modal__variant-label';
+        label.textContent = optionName;
+
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'gift-guide-modal__variant-options';
+
+        optionValues.forEach(value => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'gift-guide-modal__variant-option';
+          btn.textContent = value;
+          btn.addEventListener('click', () => {
+            optionsDiv.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            this.selectedVariants[optionName] = value;
+          });
+          optionsDiv.appendChild(btn);
+        });
+
+        group.appendChild(label);
+        group.appendChild(optionsDiv);
+        variantsContainer.appendChild(group);
+      });
+    }
+
+    async handleAddToCart() {
+      try {
+        this.addToCartBtn.disabled = true;
+        this.showError('');
+
+        // Get selected variant ID
+        const selectedOptions = Object.values(this.selectedVariants);
+        const variant = this.currentProduct.variants.find(v => {
+          const variantOptions = v.options.filter(o => o !== null);
+          return JSON.stringify(variantOptions) === JSON.stringify(selectedOptions);
+        });
+
+        if (!variant) {
+          throw new Error('Please select all options');
+        }
+
+        // Prepare cart items
+        const items = [
+          {
+            id: variant.id,
+            quantity: 1
+          }
+        ];
+
+        // Special logic: if Color == "Black" AND Size == "Medium", also add "Soft Winter Jacket"
+        if (this.selectedVariants['Color'] === 'Black' && this.selectedVariants['Size'] === 'Medium') {
+          // Find the "Soft Winter Jacket" product
+          const softJacketResponse = await fetch('/search/suggest.json?q=Soft%20Winter%20Jacket&resources[type]=product&resources[limit]=1');
+          const searchData = await softJacketResponse.json();
+          
+          if (searchData.resources.results.products && searchData.resources.results.products.length > 0) {
+            const jacketProduct = searchData.resources.results.products[0];
+            // Get first variant ID
+            const jacketVariantResponse = await fetch(`/products/${jacketProduct.handle}.js`);
+            const jacketData = await jacketVariantResponse.json();
+            if (jacketData.variants.length > 0) {
+              items.push({
+                id: jacketData.variants[0].id,
+                quantity: 1
+              });
+            }
+          }
+        }
+
+        // Add to cart via AJAX
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ items })
+        });
+
+        if (!response.ok) throw new Error('Failed to add to cart');
+
+        this.showError('Added to cart successfully!', true);
+        setTimeout(() => this.closeModal(), 1500);
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        this.showError(error.message);
+      } finally {
+        this.addToCartBtn.disabled = false;
+      }
+    }
+
+    showError(message, isSuccess = false) {
+      const errorEl = document.getElementById('modalError');
+      errorEl.textContent = message;
+      errorEl.classList.toggle('show', !!message);
+      if (isSuccess) {
+        errorEl.style.color = '#4caf50';
+      } else {
+        errorEl.style.color = '#d32f2f';
+      }
+    }
+
+    closeModal() {
+      this.modal.classList.remove('active');
+      document.body.style.overflow = '';
+      this.currentProduct = null;
+      this.selectedVariants = {};
+    }
+  }
+
+  // Initialize
+  const giftGuideGrid = new GiftGuideGrid(document.querySelector('.gift-guide-grid'));
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Gift Guide Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "grid_heading",
+      "label": "Grid Heading",
+      "default": "Our Curated Selection"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Guide Grid",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
